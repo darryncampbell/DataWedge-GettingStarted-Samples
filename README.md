@@ -1,12 +1,12 @@
 # DataWedge Getting Started Samples
 
-Some of my most popular articles in the past have been "How to get started with Zebra's DataWedge" but since some of that content is 3 years old I felt it deserved an update.
+My most popular articles in the past have been "How to get started with Zebra's DataWedge" but since some of that content is 3 years old I felt it deserved an update.
 
-The following guide will show you how to get started developing an application to capture barcode data on Zebra mobile computers using Zebra's DataWedge tool.  There is extensive documentation on DataWedge available on the [Techdocs page](https://techdocs.zebra.com/datawedge/latest/guide/overview/), most of which will not be covered by this guide, including documentation on the [profile mechanism](https://techdocs.zebra.com/datawedge/latest/guide/profiles/) and available plugins.
+The following guide will show you how to get started developing an application to capture barcode data on Zebra mobile computers using Zebra's DataWedge tool.  There is extensive documentation on DataWedge available on the [Techdocs page](https://techdocs.zebra.com/datawedge/latest/guide/overview/), most of which will not be covered by this guide, including the [profile mechanism](https://techdocs.zebra.com/datawedge/latest/guide/profiles/) and available plugins.
 
 DataWedge is a service that exists on all Zebra mobile computers that controls the scanner (or other data capture hardware such as RFID) enabling your application to interact with the hardware in a very straightforward manner.
 
-This guide will show how to interact with DataWedge using **Java**, **Kotlin** and **Xamarin** but since the DataWedge service remains unchanged in each case, the code to do so is very similar.
+This guide will show how to interact with DataWedge using **Intents**.  The same sample app is given in **Java**, **Kotlin** and **Xamarin** but since the DataWedge service remains unchanged in each case, the code to do so is very similar.
 
 ## Running applications
 ![Java](https://raw.githubusercontent.com/darryncampbell/DataWedge-GettingStarted-Samples/master/screenshots/app_java.jpg)
@@ -20,19 +20,19 @@ All Zebra Mobile computers will have a pre-installed application, DataWedge, whi
 
 ![DataWedge](https://raw.githubusercontent.com/darryncampbell/DataWedge-GettingStarted-Samples/master/screenshots/dw_profiles.jpg)
 
-> The profiles are being created using the DataWedge [SET_CONFIG API](https://techdocs.zebra.com/datawedge/latest/guide/api/setconfig/) which will not be covered in this guide but has been done to make it easier to get up and running with these samples.
+> The profiles are being created using the DataWedge [SET_CONFIG API](https://techdocs.zebra.com/datawedge/latest/guide/api/setconfig/) which will not be covered in this guide but has been done to make it easier to get up and running with these samples.  Other techniques exist to [mass deploy DataWedge configurations](https://techdocs.zebra.com/datawedge/latest/guide/settings/#massdeployment).
 
 ## Listening for Scan Data
 
 DataWedge is very flexible how scan data is returned to your application; you can choose to receive key strokes, an Intent or even send the output to an external IP address.  Output is controlled by the DataWedge output plugin and these samples will make use of the _Intent_ output mechanism.
 
-For simplicity these samples use the **"Send as StartActivity"** Intent output type but you can also receive the Intent through a service ("Send as StartService") or as a broadcast ("Send as Broadcast"), it all depends how you have configured your DataWedge profile.
+For simplicity these samples use the **"Send as startActivity"** Intent output type but you can also receive the Intent through a service ("Send as startService") or as a broadcast ("Broadcast intent"), it all depends how you have configured your DataWedge profile.
 
-In the sample app manifests the launchMode is specified as "singleTop" meaning the existing activity will be re-used whenever launched by a new Intent (more information from the standard [Android docs](https://developer.android.com/guide/topics/manifest/activity-element#lmode)) and the Intent is received in the onNewIntent() call
+In the sample app manifests the launchMode is specified as "singleTop" meaning the existing activity will be re-used whenever launched by a new Intent (more information from the standard [Android docs](https://developer.android.com/guide/topics/manifest/activity-element#lmode)) and the Intent is received in the [onNewIntent()](https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)) call
 
 The scan data along with the decoder type (e.g. EAN8) is displayed on the UI
 
-Java and Kotlin:
+Java and Kotlin (AndroidManifest.xml):
 
 `android:launchMode="singleTop"`
 
@@ -81,7 +81,7 @@ protected override void OnNewIntent(Intent intent)
 }
 ```
 
-All samples use a very similar strings.xml:
+All samples use a very similar strings.xml, with only the intent filter changing from sample to sample:
 
 ```xml
 <resources>
