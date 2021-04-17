@@ -1,3 +1,6 @@
+*Please be aware that this application / sample is provided as-is for demonstration purposes without any guarantee of support*
+=========================================================
+
 # DataWedge Getting Started Samples
 
 My most popular articles in the past have been "How to get started with Zebra's DataWedge" but since some of that content is 3 years old I felt it deserved an update.
